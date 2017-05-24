@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2014-2017 by IFPEN
+All rights reserved.
+
+IFPEN Headquarters:
+1 & 4, avenue de Bois-Preau
+92852 Rueil-Malmaison Cedex - France
+-->
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+        ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+       
+        
+    </appender>
+    
+    
+    <logger name="javax.enterprise" level="WARN" />
+    <logger name="org.springframework" level="WARN" />
+    <logger name="javax.faces" level="INFO" />
+    <logger name="org.apache" level="INFO" />
+    <logger name="org.hibernate" level="WARN" />
+    <logger name="org.primefaces" level="INFO" />
+    <logger name="ch.qos.logback" level="WARN" />
+  
+    
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
