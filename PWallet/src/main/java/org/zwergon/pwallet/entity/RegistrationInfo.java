@@ -28,16 +28,16 @@ public class RegistrationInfo {
     String detail;
 
     String comment;
-    
-    public RegistrationInfo(){
+
+    public RegistrationInfo() {
     }
 
     public RegistrationInfo(
-            Long id, 
-            String company, 
-            String login, 
-            String passwd, 
-            String detail, 
+            Long id,
+            String company,
+            String login,
+            String passwd,
+            String detail,
             String comment) {
         this.id = id;
         this.company = company;
@@ -46,19 +46,25 @@ public class RegistrationInfo {
         this.detail = detail;
         this.comment = comment;
     }
-    
-      public RegistrationInfo(
-            Long id, 
-            String company, 
-            String login, 
+
+    public RegistrationInfo(
+            Long id,
+            String company,
+            String login,
             String passwd) {
         this.id = id;
         this.company = company;
         this.login = login;
         this.passwd = passwd;
     }
-    
-    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCompany() {
         return company;

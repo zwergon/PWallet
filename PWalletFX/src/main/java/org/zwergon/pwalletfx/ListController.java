@@ -2,6 +2,7 @@ package org.zwergon.pwalletfx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,13 +12,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class FXMLController implements Initializable {
+public class ListController implements Initializable, UIController {
+    
 
     @FXML
     TableView<FXInfo> tableViewId;
@@ -43,6 +46,12 @@ public class FXMLController implements Initializable {
 
             login = new SimpleStringProperty(info.getLogin());
             passwd = new SimpleStringProperty(info.getPasswd());
+            
+            System.out.println("Id:" + info.getId());
+        }
+        
+        public Long getId(){
+            return info.getId();
         }
 
         public String getLogin() {
@@ -58,37 +67,39 @@ public class FXMLController implements Initializable {
         }
 
     }
-
+    
     @FXML
-    private void onResetPropertyAction(ActionEvent event) {
-        System.out.println("You clicked me!");
+    private void processAdd(ActionEvent event) {
+        MainApp.getInstance().infoAdd();
+    }
+    
+    @FXML
+    private void processLogout(ActionEvent event) {
+        MainApp.getInstance().userLogout();
+    }
+    
+    @FXML
+    private void onMouseClickedAction( MouseEvent event ){
+        System.out.println( "event " + event.getClickCount() );
+         if (event.getClickCount() > 1) {
+            FXInfo info = tableViewId.getSelectionModel().getSelectedItem();
+           
+             MainApp.getInstance().infoEdit( info.getId() );
+        }
     }
 
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         loginColumnId.setCellValueFactory(new PropertyValueFactory("login"));
         pwColumnId.setCellValueFactory(new PropertyValueFactory("passwd"));
-
-        String urlGetAll = "http://localhost:8080/PWallet/infos";
-
-        HttpHeaders headers = new HttpHeaders();
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpEntity<RegistrationInfoDto[]> entities = new HttpEntity<RegistrationInfoDto[]>(headers);
-
+        
         try {
 
-            ResponseEntity<RegistrationInfoDto[]> result = restTemplate.exchange(urlGetAll, HttpMethod.GET, entities, RegistrationInfoDto[].class);
-
-            RegistrationInfoDto[] infos = result.getBody();
-
-            for (RegistrationInfoDto info : infos) {
+            for (RegistrationInfoDto info : InfosService.getInfos() ) {
                 data.add(new FXInfo(info));
             }
-            
-
         } catch (Exception e) {
             e.printStackTrace();
         }

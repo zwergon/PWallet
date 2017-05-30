@@ -17,11 +17,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="registrationinfo")
 public class RegistrationInfoDto {
     
+    Long id;
+
     String company;
     
     String login;
     
     String passwd;
+    
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCompany() {
         return company;

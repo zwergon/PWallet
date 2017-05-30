@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.zwergon.pwallet.entity.RegistrationInfo;
 import org.zwergon.pwallet.service.RegistrationInfoService;
@@ -30,7 +32,7 @@ public class RegistrationInfoController {
 
     @GetMapping
     public ResponseEntity<Iterable<RegistrationInfo>> list() {
-        Iterable<RegistrationInfo> infos = service.getRegistationInfos();
+        Iterable<RegistrationInfo> infos = service.getRegistrationInfos();
         if (!infos.iterator().hasNext()) {
             return new ResponseEntity<Iterable<RegistrationInfo>>(HttpStatus.NO_CONTENT);
         }
@@ -38,16 +40,15 @@ public class RegistrationInfoController {
         return new ResponseEntity<Iterable<RegistrationInfo>>(infos, HttpStatus.OK);
     }
 
-    /*@RequestMapping(
+    @GetMapping(
             value = "/{id}",
-            method = RequestMethod.GET,
             produces = "application/json")
     public @ResponseBody
-    Employee getEmployeeInJson(@PathVariable String id) {
-        return employeeDao.getEmployeeById(Integer.parseInt(id));
+    RegistrationInfo getEmployeeInJson(@PathVariable String id) {
+        return service.getRegistrationInfo(Integer.parseInt(id));
     }
 
-    @RequestMapping(
+    /*@RequestMapping(
             value = "/{id}.xml",
             method = RequestMethod.GET,
             produces = "application/xml")

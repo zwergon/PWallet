@@ -34,9 +34,12 @@ public class RegistrationInfoService {
         logger.debug("RegistrationInfoService");       
     }
     
-    public Iterable<RegistrationInfo> getRegistationInfos(){
-        return repository.findAll();
-       
+    public Iterable<RegistrationInfo> getRegistrationInfos(){
+        return repository.findAll();  
+    }
+    
+    public RegistrationInfo getRegistrationInfo( long id ){
+        return repository.findOne(id);
     }
 
 }
