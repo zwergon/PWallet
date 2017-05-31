@@ -2,7 +2,6 @@ package org.zwergon.pwalletfx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,11 +12,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 public class ListController implements Initializable, UIController {
     
@@ -30,8 +24,12 @@ public class ListController implements Initializable, UIController {
 
     @FXML
     TableColumn<FXInfo, String> pwColumnId;
+    
+     @FXML
+    TableColumn<FXInfo, String> companyColumnId;
 
-    private final ObservableList<FXInfo> data = FXCollections.observableArrayList();
+
+    private ObservableList<FXInfo> data;
 
     static public class FXInfo {
 
@@ -46,8 +44,7 @@ public class ListController implements Initializable, UIController {
 
             login = new SimpleStringProperty(info.getLogin());
             passwd = new SimpleStringProperty(info.getPasswd());
-            
-            System.out.println("Id:" + info.getId());
+            company = new SimpleStringProperty(info.getCompany());
         }
         
         public Long getId(){
@@ -60,6 +57,10 @@ public class ListController implements Initializable, UIController {
 
         public String getPasswd() {
             return passwd.get();
+        }
+        
+        public String getCompany(){
+            return company.get();
         }
 
         public RegistrationInfoDto getInfo() {
@@ -80,7 +81,6 @@ public class ListController implements Initializable, UIController {
     
     @FXML
     private void onMouseClickedAction( MouseEvent event ){
-        System.out.println( "event " + event.getClickCount() );
          if (event.getClickCount() > 1) {
             FXInfo info = tableViewId.getSelectionModel().getSelectedItem();
            
@@ -94,8 +94,16 @@ public class ListController implements Initializable, UIController {
 
         loginColumnId.setCellValueFactory(new PropertyValueFactory("login"));
         pwColumnId.setCellValueFactory(new PropertyValueFactory("passwd"));
+        companyColumnId.setCellValueFactory(new PropertyValueFactory("company"));
         
-        try {
+    }
+    
+    
+    public void update(){
+        
+        data = FXCollections.observableArrayList();
+        
+         try {
 
             for (RegistrationInfoDto info : InfosService.getInfos() ) {
                 data.add(new FXInfo(info));
@@ -105,7 +113,7 @@ public class ListController implements Initializable, UIController {
         }
         
         tableViewId.setItems(data);
-
+        
     }
     
 }

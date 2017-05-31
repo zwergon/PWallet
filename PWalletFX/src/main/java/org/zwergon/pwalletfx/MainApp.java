@@ -78,12 +78,16 @@ public class MainApp extends Application {
     public void displayList(){
          if (loggedUser != null) {
             gotoWindow(Window.LIST);
+            ListController controller = (ListController)Window.LIST.controller;
+            controller.update();
         }
     }
     
     public void infoAdd() {
         if (loggedUser != null) {
             gotoWindow(Window.INFOS);
+             InfosController controller = (InfosController)Window.INFOS.controller;
+            controller.setInfos(-1);
         }
     }
 
