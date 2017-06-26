@@ -1,6 +1,8 @@
 package org.zwergon.pwalletfx;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -104,8 +106,12 @@ public class ListController implements Initializable, UIController {
         data = FXCollections.observableArrayList();
         
          try {
+             
+            //to sort by company key.
+            RegistrationInfoDto[] infos = InfosService.getInfos();
+            Arrays.sort(infos, new InfosComparator());
 
-            for (RegistrationInfoDto info : InfosService.getInfos() ) {
+            for (RegistrationInfoDto info : infos ) {
                 data.add(new FXInfo(info));
             }
         } catch (Exception e) {
@@ -116,4 +122,13 @@ public class ListController implements Initializable, UIController {
         
     }
     
+    
+    class InfosComparator implements Comparator<RegistrationInfoDto> {
+
+        @Override
+        public int compare(RegistrationInfoDto o1, RegistrationInfoDto o2) {
+            return o1.getCompany().compareTo(o2.getCompany());
+        }
+        
+    }
 }

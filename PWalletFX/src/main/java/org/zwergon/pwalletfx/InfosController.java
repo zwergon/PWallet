@@ -56,10 +56,10 @@ public class InfosController implements Initializable, UIController {
         }
         info.setCompany(companyId.getText());
         info.setLogin(loginId.getText());
-        info.setPasswd(passwdId.getText());
+        info.setPasswd( AESencrp.encrypt(passwdId.getText()) );
         InfosService.update(info);
-        
-         MainApp.getInstance().displayList();
+
+        MainApp.getInstance().displayList();
 
     }
 
@@ -72,22 +72,22 @@ public class InfosController implements Initializable, UIController {
     private void processLogout(ActionEvent event) {
         MainApp.getInstance().userLogout();
     }
-    
+
     @FXML
     private void processDelete(ActionEvent event) {
-        
-        if ( id == -1 ){
+
+        if (id == -1) {
             return;
         }
-        
+
         Alert alert = new Alert(AlertType.CONFIRMATION, "Delete ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
-           InfosService.delete(id);
-           MainApp.getInstance().displayList();
+            InfosService.delete(id);
+            MainApp.getInstance().displayList();
         }
-       
+
     }
 
     public void setInfos(long id) {
@@ -107,7 +107,7 @@ public class InfosController implements Initializable, UIController {
 
             keyId.setText("Id: " + Long.toString(id));
             loginId.setText(info.getLogin());
-            passwdId.setText(info.getPasswd());
+            passwdId.setText( AESencrp.decrypt(info.getPasswd()));
             companyId.setText(info.getCompany());
         }
     }
