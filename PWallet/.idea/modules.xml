@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/PWallet.iml" filepath="$PROJECT_DIR$/PWallet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PWalletFX/PWalletFX.iml" filepath="$PROJECT_DIR$/PWalletFX/PWalletFX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PWalletServer/PWalletServer.iml" filepath="$PROJECT_DIR$/PWalletServer/PWalletServer.iml" />
+    </modules>
+  </component>
+</project>
