@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/PWalletServer/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/PWalletServer/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/PWalletServer/target" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
